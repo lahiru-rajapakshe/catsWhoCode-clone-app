@@ -1,21 +1,21 @@
 package online.lahiru.sprinngbotrestapi.bean;
 
 public class Student {
-    private String  id;
+    private int  id;
     private String fullName;
     private String  lastName;
 
-    public Student(String id, String fullName, String lastName) {
+    public Student(int id, String fullName, String lastName) {
         this.id = id;
         this.fullName = fullName;
         this.lastName = lastName;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
