@@ -3,6 +3,7 @@ package online.lahiru.sprinngbotrestapi.controller;
 import online.lahiru.sprinngbotrestapi.bean.Student;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -26,9 +27,15 @@ public class StudentController {
 
         return students;
     }
-@GetMapping("listStu/{id}")
+
+    @GetMapping("listStu/{id}")
     public Student studentPathVariable(@PathVariable("id") int stuId) {
         return new Student(stuId, "LARA", "RJ");
 
+    }
+//    http://localhost:8080/listStu/query?id=2
+    @GetMapping("listStu/query")
+    public Student studentRequestVariable(@RequestParam int id){
+        return  new Student(id,"Ramesh","fadatare");
     }
 }
