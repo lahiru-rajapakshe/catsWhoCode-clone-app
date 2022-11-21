@@ -2,6 +2,7 @@ package online.lahiru.sprinngbotrestapi.controller;
 
 import online.lahiru.sprinngbotrestapi.bean.Student;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -45,4 +46,17 @@ public class StudentController {
         System.out.println(student.getLastName());
         return  student;
     }
+
+    @GetMapping("student")
+    public ResponseEntity<Student>   getStudent2() {
+        Student student = new Student(1, "lahiru", "San");
+//        return new ResponseEntity<>(student, HttpStatus.OK);
+//return  ResponseEntity.ok(student);
+// This both return types are ok
+
+        return  ResponseEntity.ok().header("custome-header", "lara")
+                .body(student);
+
+    }
+
 }
