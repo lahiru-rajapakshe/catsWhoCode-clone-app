@@ -4,7 +4,9 @@ import online.lahiru.sprinngbotrestapi.entity.Post;
 import online.lahiru.sprinngbotrestapi.payload.PostDTO;
 import online.lahiru.sprinngbotrestapi.repository.PostRepository;
 import online.lahiru.sprinngbotrestapi.service.PostService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PostServiceImpl implements PostService {
 
     private PostRepository postRepository;
