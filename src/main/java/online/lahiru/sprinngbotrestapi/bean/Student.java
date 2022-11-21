@@ -20,7 +20,7 @@ public class Student {
     }
 
     public String getFullName() {
-        return fullName;
+        return  fullName;
     }
 
     public void setFullName(String fullName) {
