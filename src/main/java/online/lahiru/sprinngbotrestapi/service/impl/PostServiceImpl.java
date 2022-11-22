@@ -6,6 +6,8 @@ import online.lahiru.sprinngbotrestapi.repository.PostRepository;
 import online.lahiru.sprinngbotrestapi.service.PostService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PostServiceImpl implements PostService {
 
@@ -15,6 +17,16 @@ public class PostServiceImpl implements PostService {
         this.postRepository = postRepository;
     }
 
+    //convert entity to DTO
+    private PostDTO mapToDTO(Post post){
+        PostDTO postDTO = new PostDTO();
+        postDTO.setId(post.getId());
+        postDTO.setTitle(post.getTitle());
+        postDTO.setDescription(post.getDescription());
+        postDTO.setContent(post.getContent());
+
+        return postDTO;
+    }
     @Override
     public PostDTO createPost(PostDTO postDTO) {
 
@@ -24,13 +36,26 @@ public class PostServiceImpl implements PostService {
         post.setContent(postDTO.getContent());
 
         Post newPost = postRepository.save(post);
-        PostDTO postResponse = new PostDTO();
 
-        postResponse.setId(newPost.getId());
-        postResponse.setTitle(newPost.getTitle());
-        postResponse.setDescription(newPost.getDescription());
-        postResponse.setContent(newPost.getContent());
+        //convert entity to DTO
+        PostDTO postResponse = mapToDTO(newPost);
+//        PostDTO postResponse = new PostDTO();
+//
+//        postResponse.setId(newPost.getId());
+//        postResponse.setTitle(newPost.getTitle());
+//        postResponse.setDescription(newPost.getDescription());
+//        postResponse.setContent(newPost.getContent());
 
         return postResponse;
     }
+
+    @Override
+    public List<PostDTO> getAllPosts() {
+        return null;
+    }
+
+
+
+
 }
+
