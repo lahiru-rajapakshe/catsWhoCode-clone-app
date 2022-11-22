@@ -28,7 +28,8 @@ public class PostServiceImpl implements PostService {
         return postDTO;
     }
 
-    private Post mapTToEntiy(PostDTO postDTO){
+    //convert dto to entity
+    private Post mapToEntiy(PostDTO postDTO){
         Post post = new Post();
         post.setTitle(postDTO.getTitle());
         post.setDescription(postDTO.getDescription());
@@ -42,7 +43,7 @@ public class PostServiceImpl implements PostService {
 //        post.setTitle(postDTO.getTitle());
 //        post.setDescription(postDTO.getDescription());
 //        post.setContent(postDTO.getContent());
-
+        Post post = mapToEntiy(postDTO);
         Post newPost = postRepository.save(post);
 
         //convert entity to DTO
