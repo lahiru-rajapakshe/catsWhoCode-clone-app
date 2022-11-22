@@ -7,6 +7,7 @@ import online.lahiru.sprinngbotrestapi.service.PostService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -27,14 +28,23 @@ public class PostServiceImpl implements PostService {
 
         return postDTO;
     }
-    @Override
-    public PostDTO createPost(PostDTO postDTO) {
 
+    //convert dto to entity
+    private Post mapToEntiy(PostDTO postDTO){
         Post post = new Post();
         post.setTitle(postDTO.getTitle());
         post.setDescription(postDTO.getDescription());
         post.setContent(postDTO.getContent());
+        return  post;
+    }
+    @Override
+    public PostDTO createPost(PostDTO postDTO) {
 
+//        Post post = new Post();
+//        post.setTitle(postDTO.getTitle());
+//        post.setDescription(postDTO.getDescription());
+//        post.setContent(postDTO.getContent());
+        Post post = mapToEntiy(postDTO);
         Post newPost = postRepository.save(post);
 
         //convert entity to DTO
@@ -51,7 +61,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostDTO> getAllPosts() {
-        return null;
+        List<Post> posts = postRepository.findAll();
+        return posts.stream().map(post -> mapToDTO(post)).collect(Collectors.toList());
     }
 
 
