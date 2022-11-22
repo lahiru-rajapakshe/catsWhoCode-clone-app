@@ -27,13 +27,21 @@ public class PostServiceImpl implements PostService {
 
         return postDTO;
     }
-    @Override
-    public PostDTO createPost(PostDTO postDTO) {
 
+    private Post mapTToEntiy(PostDTO postDTO){
         Post post = new Post();
         post.setTitle(postDTO.getTitle());
         post.setDescription(postDTO.getDescription());
         post.setContent(postDTO.getContent());
+        return  post;
+    }
+    @Override
+    public PostDTO createPost(PostDTO postDTO) {
+
+//        Post post = new Post();
+//        post.setTitle(postDTO.getTitle());
+//        post.setDescription(postDTO.getDescription());
+//        post.setContent(postDTO.getContent());
 
         Post newPost = postRepository.save(post);
 
