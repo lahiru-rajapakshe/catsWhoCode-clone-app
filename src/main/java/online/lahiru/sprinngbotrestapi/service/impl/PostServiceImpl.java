@@ -1,6 +1,7 @@
 package online.lahiru.sprinngbotrestapi.service.impl;
 
 import online.lahiru.sprinngbotrestapi.entity.Post;
+import online.lahiru.sprinngbotrestapi.exception.ResourceNotFoundException;
 import online.lahiru.sprinngbotrestapi.payload.PostDTO;
 import online.lahiru.sprinngbotrestapi.repository.PostRepository;
 import online.lahiru.sprinngbotrestapi.service.PostService;
@@ -65,7 +66,10 @@ public class PostServiceImpl implements PostService {
         return posts.stream().map(post -> mapToDTO(post)).collect(Collectors.toList());
     }
 
-
+    @Override
+    public PostDTO getPostById(long id) {
+        postRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("post","id",id));
+    }
 
 
 }
