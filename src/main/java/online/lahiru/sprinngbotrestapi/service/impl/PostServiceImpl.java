@@ -74,7 +74,6 @@ public class PostServiceImpl implements PostService {
     }
 
 
-
     @Override
     public PostDTO updatePost(PostDTO postDTO, long id) {
         //get post by id from the database
@@ -89,6 +88,12 @@ public class PostServiceImpl implements PostService {
 
     }
 
+    @Override
+    public void deletePostById(long id) {
+        //get post by id from the database
+        Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("post", "id", id));
+        postRepository.delete(post);
 
+    }
 }
 

@@ -20,27 +20,34 @@ public class PostController {
 
     //create blog post rest API
     @PostMapping
-    public ResponseEntity<PostDTO> createPost(@RequestBody PostDTO postDTO){
-        return  new ResponseEntity<>(postService.createPost(postDTO), HttpStatus.CREATED);
+    public ResponseEntity<PostDTO> createPost(@RequestBody PostDTO postDTO) {
+        return new ResponseEntity<>(postService.createPost(postDTO), HttpStatus.CREATED);
     }
 
     //get all post rest API
     @GetMapping
-    public List<PostDTO> getAllPosts(){
-return postService.getAllPosts();
+    public List<PostDTO> getAllPosts() {
+        return postService.getAllPosts();
     }
 
     //get post by id rest API
     @GetMapping("/{id}")
-    public ResponseEntity<PostDTO> getPostById(@PathVariable(name = "id") long id){
-return ResponseEntity.ok(postService.getPostById(id));
+    public ResponseEntity<PostDTO> getPostById(@PathVariable(name = "id") long id) {
+        return ResponseEntity.ok(postService.getPostById(id));
     }
 
     //update update post API
     @PutMapping("/{id}")
-    public ResponseEntity<PostDTO> updatePost(@RequestBody PostDTO postDTO,@PathVariable(name = "id") long id){
+    public ResponseEntity<PostDTO> updatePost(@RequestBody PostDTO postDTO, @PathVariable(name = "id") long id) {
         PostDTO postResponce = postService.updatePost(postDTO, id);
-        return  new ResponseEntity<>(postResponce,HttpStatus.OK);
+        return new ResponseEntity<>(postResponce, HttpStatus.OK);
 
+    }
+
+    //    delete post rest Api
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletePost(@PathVariable(name = "id") long id) {
+        postService.deletePostById(id);
+        return new ResponseEntity<>("Post deleted successfully !", HttpStatus.OK);
     }
 }
