@@ -8,6 +8,7 @@ import online.lahiru.sprinngbotrestapi.repository.PostRepository;
 import online.lahiru.sprinngbotrestapi.service.PostService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.print.attribute.standard.PageRanges;
@@ -66,26 +67,26 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostResponse getAllPosts(int pageNo,int pageSize) {
+    public PostResponse getAllPosts(int pageNo, int pageSize,String sortBy) {
 
-        PageRequest pageable = PageRequest.of(pageNo, pageSize);
+        PageRequest pageable = PageRequest.of(pageNo,pageSize, Sort.by(sortBy));
 
-        
+
         Page<Post> posts = postRepository.findAll(pageable);
         //get content for page object
         posts.getContent();
 
 
-        List<PostDTO> content= posts.stream().map(post -> mapToDTO(post)).collect(Collectors.toList());
+        List<PostDTO> content = posts.stream().map(post -> mapToDTO(post)).collect(Collectors.toList());
         PostResponse postResponse = new PostResponse();
         postResponse.setContent(content);
         postResponse.setPageNo(posts.getNumber());
         postResponse.setPageSize(posts.getSize());
-postResponse.setTotalElements(posts.getTotalElements());
-postResponse.setTotalPages(posts.getTotalPages());
-postResponse.setLast(posts.isLast());
+        postResponse.setTotalElements(posts.getTotalElements());
+        postResponse.setTotalPages(posts.getTotalPages());
+        postResponse.setLast(posts.isLast());
 
-return postResponse;
+        return postResponse;
     }
 
     @Override
