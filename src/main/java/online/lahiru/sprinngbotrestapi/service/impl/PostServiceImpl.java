@@ -5,8 +5,11 @@ import online.lahiru.sprinngbotrestapi.exception.ResourceNotFoundException;
 import online.lahiru.sprinngbotrestapi.payload.PostDTO;
 import online.lahiru.sprinngbotrestapi.repository.PostRepository;
 import online.lahiru.sprinngbotrestapi.service.PostService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import javax.print.attribute.standard.PageRanges;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,8 +65,16 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDTO> getAllPosts() {
-        List<Post> posts = postRepository.findAll();
+    public List<PostDTO> getAllPosts(int pageNo,int pageSize) {
+
+        PageRequest pageable = PageRequest.of(pageNo, pageSize);
+
+        
+        Page<Post> posts = postRepository.findAll(pageable);
+        //get content for page object
+        posts.getContent();
+
+
         return posts.stream().map(post -> mapToDTO(post)).collect(Collectors.toList());
     }
 
