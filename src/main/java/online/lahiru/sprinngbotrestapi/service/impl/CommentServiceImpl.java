@@ -29,5 +29,13 @@ public class CommentServiceImpl implements CommentService {
 
         return commentDTO;
     }
+private Comment mapToEntity(CommentDTO commentDTO){
+    Comment comment = new Comment();
+    comment.setId(commentDTO.getId());
+    comment.setName(commentDTO.getName());
+    comment.setEmial(commentDTO.getEmial());
+    comment.setBody(commentDTO.getBody());
 
+    return comment;
+}
 }
