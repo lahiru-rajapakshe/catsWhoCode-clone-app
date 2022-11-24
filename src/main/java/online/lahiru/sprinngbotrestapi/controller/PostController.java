@@ -36,4 +36,11 @@ return postService.getAllPosts();
 return ResponseEntity.ok(postService.getPostById(id));
     }
 
+    //update update post API
+    @PutMapping("/{id}")
+    public ResponseEntity<PostDTO> updatePost(@RequestBody PostDTO postDTO,@PathVariable(name = "id") long id){
+        PostDTO postResponce = postService.updatePost(postDTO, id);
+        return  new ResponseEntity<>(postResponce,HttpStatus.OK);
+
+    }
 }

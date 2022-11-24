@@ -20,7 +20,7 @@ public class PostServiceImpl implements PostService {
     }
 
     //convert entity to DTO
-    private PostDTO mapToDTO(Post post){
+    private PostDTO mapToDTO(Post post) {
         PostDTO postDTO = new PostDTO();
         postDTO.setId(post.getId());
         postDTO.setTitle(post.getTitle());
@@ -31,13 +31,14 @@ public class PostServiceImpl implements PostService {
     }
 
     //convert dto to entity
-    private Post mapToEntiy(PostDTO postDTO){
+    private Post mapToEntiy(PostDTO postDTO) {
         Post post = new Post();
         post.setTitle(postDTO.getTitle());
         post.setDescription(postDTO.getDescription());
         post.setContent(postDTO.getContent());
-        return  post;
+        return post;
     }
+
     @Override
     public PostDTO createPost(PostDTO postDTO) {
 
@@ -70,6 +71,22 @@ public class PostServiceImpl implements PostService {
     public PostDTO getPostById(long id) {
         Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("post", "id", id));
         return mapToDTO(post);
+    }
+
+
+
+    @Override
+    public PostDTO updatePost(PostDTO postDTO, long id) {
+        //get post by id from the database
+        Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("post", "id", id));
+        post.setTitle(postDTO.getTitle());
+        post.setDescription(postDTO.getDescription());
+        post.setContent(post.getContent());
+
+        Post updatedPost = postRepository.save(post);
+
+        return mapToDTO(updatedPost);
+
     }
 
 
