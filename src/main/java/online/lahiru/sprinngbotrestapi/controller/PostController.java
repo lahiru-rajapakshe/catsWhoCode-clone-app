@@ -1,6 +1,7 @@
 package online.lahiru.sprinngbotrestapi.controller;
 
 import online.lahiru.sprinngbotrestapi.payload.PostDTO;
+import online.lahiru.sprinngbotrestapi.payload.PostResponse;
 import online.lahiru.sprinngbotrestapi.service.PostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class PostController {
 
     //get all post rest API
     @GetMapping
-    public List<PostDTO> getAllPosts(
+    public PostResponse getAllPosts(
             @RequestParam(value = "pageNo", defaultValue = "0",required = false) int pageNo,
             @RequestParam(value = "pageSize",defaultValue = "10",required = false) int pageSize
     ) {

@@ -1,6 +1,7 @@
 package online.lahiru.sprinngbotrestapi.service;
 
 import online.lahiru.sprinngbotrestapi.payload.PostDTO;
+import online.lahiru.sprinngbotrestapi.payload.PostResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 public interface PostService {
      PostDTO createPost(PostDTO postDTO);
 
-     List<PostDTO> getAllPosts(int pageNo,int pageSize);
+     PostResponse getAllPosts(int pageNo, int pageSize);
 
      PostDTO getPostById(long id);
 

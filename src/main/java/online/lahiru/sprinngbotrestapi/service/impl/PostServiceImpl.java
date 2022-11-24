@@ -3,6 +3,7 @@ package online.lahiru.sprinngbotrestapi.service.impl;
 import online.lahiru.sprinngbotrestapi.entity.Post;
 import online.lahiru.sprinngbotrestapi.exception.ResourceNotFoundException;
 import online.lahiru.sprinngbotrestapi.payload.PostDTO;
+import online.lahiru.sprinngbotrestapi.payload.PostResponse;
 import online.lahiru.sprinngbotrestapi.repository.PostRepository;
 import online.lahiru.sprinngbotrestapi.service.PostService;
 import org.springframework.data.domain.Page;
@@ -65,7 +66,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDTO> getAllPosts(int pageNo,int pageSize) {
+    public PostResponse getAllPosts(int pageNo,int pageSize) {
 
         PageRequest pageable = PageRequest.of(pageNo, pageSize);
 
@@ -75,7 +76,16 @@ public class PostServiceImpl implements PostService {
         posts.getContent();
 
 
-        return posts.stream().map(post -> mapToDTO(post)).collect(Collectors.toList());
+        List<PostDTO> content= posts.stream().map(post -> mapToDTO(post)).collect(Collectors.toList());
+        PostResponse postResponse = new PostResponse();
+        postResponse.setContent(content);
+        postResponse.setPageNo(posts.getNumber());
+        postResponse.setPageSize(posts.getSize());
+postResponse.setTotalElements(posts.getTotalElements());
+postResponse.setTotalPages(posts.getTotalPages());
+postResponse.setLast(posts.isLast());
+
+return postResponse;
     }
 
     @Override
