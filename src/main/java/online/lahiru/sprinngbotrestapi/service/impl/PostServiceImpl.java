@@ -70,7 +70,8 @@ public class PostServiceImpl implements PostService {
     public PostResponse getAllPosts(int pageNo, int pageSize,String sortBy) {
 
         PageRequest pageable = PageRequest.of(pageNo,pageSize, Sort.by(sortBy));
-
+//        PageRequest pageable = PageRequest.of(pageNo,pageSize, Sort.by(sortBy).descending());
+//descending order sorting
 
         Page<Post> posts = postRepository.findAll(pageable);
         //get content for page object
