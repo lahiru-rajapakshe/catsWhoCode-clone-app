@@ -6,6 +6,7 @@ import online.lahiru.sprinngbotrestapi.payload.PostDTO;
 import online.lahiru.sprinngbotrestapi.payload.PostResponse;
 import online.lahiru.sprinngbotrestapi.repository.PostRepository;
 import online.lahiru.sprinngbotrestapi.service.PostService;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -19,28 +20,34 @@ import java.util.stream.Collectors;
 public class PostServiceImpl implements PostService {
 
     private PostRepository postRepository;
+    private ModelMapper mapper;
 
-    public PostServiceImpl(PostRepository postRepository) {
+    public PostServiceImpl(PostRepository postRepository, ModelMapper modelMapper) {
         this.postRepository = postRepository;
+        this.mapper = modelMapper;
     }
 
     //convert entity to DTO
     private PostDTO mapToDTO(Post post) {
-        PostDTO postDTO = new PostDTO();
-        postDTO.setId(post.getId());
-        postDTO.setTitle(post.getTitle());
-        postDTO.setDescription(post.getDescription());
-        postDTO.setContent(post.getContent());
+        PostDTO postDTO = mapper.map(post, PostDTO.class);
+
+
+//        PostDTO postDTO = new PostDTO();
+//        postDTO.setId(post.getId());
+//        postDTO.setTitle(post.getTitle());
+//        postDTO.setDescription(post.getDescription());
+//        postDTO.setContent(post.getContent());
 
         return postDTO;
     }
 
     //convert dto to entity
     private Post mapToEntiy(PostDTO postDTO) {
-        Post post = new Post();
-        post.setTitle(postDTO.getTitle());
-        post.setDescription(postDTO.getDescription());
-        post.setContent(postDTO.getContent());
+        Post post = mapper.map(postDTO, Post.class);
+//        Post post = new Post();
+//        post.setTitle(postDTO.getTitle());
+//        post.setDescription(postDTO.getDescription());
+//        post.setContent(postDTO.getContent());
         return post;
     }
 
@@ -67,13 +74,13 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostResponse getAllPosts(int pageNo, int pageSize,String sortBy,String sortDir) {
+    public PostResponse getAllPosts(int pageNo, int pageSize, String sortBy, String sortDir) {
 
 //        PageRequest pageable = PageRequest.of(pageNo,pageSize, Sort.by(sortBy).descending());
 //descending order sorting
 
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
-        PageRequest pageable = PageRequest.of(pageNo,pageSize, sort);
+        PageRequest pageable = PageRequest.of(pageNo, pageSize, sort);
 
 
         Page<Post> posts = postRepository.findAll(pageable);
