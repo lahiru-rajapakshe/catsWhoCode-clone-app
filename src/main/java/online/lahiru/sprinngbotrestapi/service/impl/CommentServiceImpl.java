@@ -75,7 +75,7 @@ public class CommentServiceImpl implements CommentService {
         Comment updatedComment = commentRepository.save(comment);
         return mapToDTO(updatedComment);
 
-        return null;
+
     }
 
     private CommentDTO mapToDTO(Comment comment) {
