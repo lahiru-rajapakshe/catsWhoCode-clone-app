@@ -13,5 +13,5 @@ public interface CommentService {
 
     CommentDTO updateComment(Long postId,long commentId, CommentDTO commentRequest);
 
-    void delettePost(Long postId, Long commentId);
+    void deletePost(Long postId, Long commentId);
 }
