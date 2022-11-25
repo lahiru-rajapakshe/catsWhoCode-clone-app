@@ -9,7 +9,9 @@ import online.lahiru.sprinngbotrestapi.repository.PostRepository;
 import online.lahiru.sprinngbotrestapi.service.CommentService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -17,26 +19,31 @@ public class CommentServiceImpl implements CommentService {
     private CommentRepository commentRepository;
     private PostRepository postRepository;
 
-    public CommentServiceImpl(CommentRepository commentRepository,PostRepository postRepository) {
+    public CommentServiceImpl(CommentRepository commentRepository, PostRepository postRepository) {
         this.commentRepository = commentRepository;
-        this.postRepository=postRepository;
+        this.postRepository = postRepository;
     }
 
     @Override
     public CommentDTO createComment(long postId, CommentDTO commentDTO) {
         Comment comment = mapToEntity(commentDTO);
 
-        Post post = postRepository.findById(postId).orElseThrow(()->new ResourceNotFoundException("Post","id",postId));
+        Post post = postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post", "id", postId));
         comment.setPost(post);
         Comment newComment = commentRepository.save(comment);
-
-        
 
 
         return mapToDTO(newComment);
     }
 
-    private CommentDTO mapToDTO(Comment comment){
+    @Override
+    public List<CommentDTO> getCommentsByPostId(long postId) {
+        List<Comment> comments = commentRepository.findByPostId(postId);
+        return comments.stream().map(comment -> mapToDTO(comment)).collect(Collectors.toList());
+
+    }
+
+    private CommentDTO mapToDTO(Comment comment) {
         CommentDTO commentDTO = new CommentDTO();
         commentDTO.setId(comment.getId());
         commentDTO.setName(comment.getName());
@@ -45,13 +52,14 @@ public class CommentServiceImpl implements CommentService {
 
         return commentDTO;
     }
-private Comment mapToEntity(CommentDTO commentDTO){
-    Comment comment = new Comment();
-    comment.setId(commentDTO.getId());
-    comment.setName(commentDTO.getName());
-    comment.setEmial(commentDTO.getEmial());
-    comment.setBody(commentDTO.getBody());
 
-    return comment;
-}
+    private Comment mapToEntity(CommentDTO commentDTO) {
+        Comment comment = new Comment();
+        comment.setId(commentDTO.getId());
+        comment.setName(commentDTO.getName());
+        comment.setEmial(commentDTO.getEmial());
+        comment.setBody(commentDTO.getBody());
+
+        return comment;
+    }
 }
