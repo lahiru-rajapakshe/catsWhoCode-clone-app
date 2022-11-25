@@ -20,4 +20,6 @@ public class CommentController {
     CommentDTO commentDTO){
     return new ResponseEntity<>(commentService.createComment(postId,commentDTO), HttpStatus.CREATED);
     }
+
+
 }
