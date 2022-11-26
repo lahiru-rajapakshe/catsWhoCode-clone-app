@@ -1,7 +1,6 @@
 package online.lahiru.sprinngbotrestapi.controller;
 
 import online.lahiru.sprinngbotrestapi.payload.PostDTO;
-import online.lahiru.sprinngbotrestapi.payload.PostDTOv2;
 import online.lahiru.sprinngbotrestapi.payload.PostResponse;
 import online.lahiru.sprinngbotrestapi.service.PostService;
 import online.lahiru.sprinngbotrestapi.utils.AppConstants;
@@ -48,22 +47,7 @@ public class PostController {
         return ResponseEntity.ok(postService.getPostById(id));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<PostDTOv2> getPostByIdv2(@PathVariable(name = "id") long id) {
-        PostDTO postDTO = postService.getPostById(id);
-        PostDTOv2 postDTOv2 = new PostDTOv2();
-        postDTOv2.setId(postDTO.getId());
-        postDTOv2.setTitle(postDTO.getTitle());
-        postDTOv2.setContent(postDTO.getContent());
-        postDTOv2.setDescription(postDTO.getDescription());
 
-        List<String> tags = new ArrayList<>();
-        tags.add("java");
-        tags.add("spring boot");
-        tags.add("Hibernate");
-
-        return ResponseEntity.ok(postDTOv2);
-    }
 
 
     //update update post API
