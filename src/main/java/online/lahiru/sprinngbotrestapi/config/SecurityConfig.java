@@ -70,6 +70,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //
 //    }
 
+    //this is needs to comment, bcoz of this is manuel login part
+
 
     @Override
     @Bean
