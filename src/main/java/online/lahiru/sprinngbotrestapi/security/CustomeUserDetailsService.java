@@ -3,6 +3,8 @@ package online.lahiru.sprinngbotrestapi.security;
 import online.lahiru.sprinngbotrestapi.entity.Role;
 import online.lahiru.sprinngbotrestapi.entity.User;
 import online.lahiru.sprinngbotrestapi.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 @Service
 public class CustomeUserDetailsService implements UserDetailsService {
 
+    @Autowired
     private UserRepository userRepository;
 
     public CustomeUserDetailsService(UserRepository userRepository) {
