@@ -2,10 +2,12 @@ package online.lahiru.sprinngbotrestapi.controller;
 
 import online.lahiru.sprinngbotrestapi.entity.Role;
 import online.lahiru.sprinngbotrestapi.entity.User;
+import online.lahiru.sprinngbotrestapi.payload.JWTAuthResponse;
 import online.lahiru.sprinngbotrestapi.payload.LoginDTO;
 import online.lahiru.sprinngbotrestapi.payload.SignUpDTO;
 import online.lahiru.sprinngbotrestapi.repository.RoleRepository;
 import online.lahiru.sprinngbotrestapi.repository.UserRepository;
+import online.lahiru.sprinngbotrestapi.security.JWTTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,13 +39,18 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private JWTTokenProvider tokenProvider;
+
     @PostMapping("/signin")
-    public ResponseEntity<String> authenticateUser(@RequestBody LoginDTO loginDTO){
+    public ResponseEntity<JWTAuthResponse> authenticateUser(@RequestBody LoginDTO loginDTO){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getUsernameOrEmail(),
                 loginDTO.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return  new ResponseEntity<>("User sign in successfully ", HttpStatus.OK);
+
+        String token = tokenProvider.generateToken(authentication);
+        return  ResponseEntity.ok(new JWTAuthResponse(token));
     }
 
     @PostMapping("/signup")
