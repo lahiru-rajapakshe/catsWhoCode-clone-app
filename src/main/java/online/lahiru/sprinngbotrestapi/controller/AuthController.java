@@ -1,5 +1,7 @@
 package online.lahiru.sprinngbotrestapi.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import online.lahiru.sprinngbotrestapi.entity.Role;
 import online.lahiru.sprinngbotrestapi.entity.User;
 import online.lahiru.sprinngbotrestapi.payload.JWTAuthResponse;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
 
+@Api(value = "Auth controller exposes signin & signup REST APIs")
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
@@ -42,6 +45,7 @@ public class AuthController {
     @Autowired
     private JWTTokenProvider tokenProvider;
 
+    @ApiOperation(value = "REST API to Register Signup")
     @PostMapping("/signin")
     public ResponseEntity<JWTAuthResponse> authenticateUser(@RequestBody LoginDTO loginDTO){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getUsernameOrEmail(),
@@ -52,6 +56,7 @@ public class AuthController {
         String token = tokenProvider.generateToken(authentication);
         return  ResponseEntity.ok(new JWTAuthResponse(token));
     }
+    @ApiOperation(value = "REST API to Login Signup")
 
     @PostMapping("/signup")
 public ResponseEntity<?> registerUser(SignUpDTO signUpDTO){

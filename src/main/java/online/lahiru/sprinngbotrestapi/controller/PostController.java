@@ -1,5 +1,8 @@
 package online.lahiru.sprinngbotrestapi.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
 import online.lahiru.sprinngbotrestapi.payload.PostDTO;
 import online.lahiru.sprinngbotrestapi.payload.PostResponse;
 import online.lahiru.sprinngbotrestapi.service.PostService;
@@ -12,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-
+@Api(value = "CatsWhoCode REST APIs POst Resourse")
 @RestController
 @RequestMapping("/api/v1/posts")
 public class PostController {
@@ -24,6 +27,8 @@ public class PostController {
     }
 
     //create blog post rest API
+    @ApiOperation(value = "Create POST REST API")
+//    @ApiResponse(va)
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<PostDTO> createPost(@Valid @RequestBody PostDTO postDTO) {
@@ -31,6 +36,8 @@ public class PostController {
     }
 
     //get all post rest API
+    @ApiOperation(value = "Get all POST REST API")
+
     @GetMapping
     public PostResponse getAllPosts(
             @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
@@ -42,6 +49,8 @@ public class PostController {
     }
 
     //get post by id rest API
+    @ApiOperation(value = "Get POST by id REST API")
+
     @GetMapping("/{id}")
     public ResponseEntity<PostDTO> getPostByIdv1(@PathVariable(name = "id") long id) {
         return ResponseEntity.ok(postService.getPostById(id));
@@ -51,6 +60,8 @@ public class PostController {
 
 
     //update update post API
+    @ApiOperation(value = "Update POST REST API")
+
     @PutMapping("/{id}")
     public ResponseEntity<PostDTO> updatePost(@Valid @RequestBody PostDTO postDTO, @PathVariable(name = "id") long id) {
         PostDTO postResponce = postService.updatePost(postDTO, id);
@@ -59,6 +70,8 @@ public class PostController {
     }
 
     //    delete post rest Api
+    @ApiOperation(value = "Delete POST REST API")
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletePost(@PathVariable(name = "id") long id) {
         postService.deletePostById(id);
